@@ -24,6 +24,8 @@
  *                                                                         *
  *   Copyright (C) 2011 Andreas Fritiofson                                 *
  *   andreas.fritiofson@gmail.com                                          *
+ *                                                                         *
+ * 	 Portions Copyright (C) 2023-2024 Analog Devices, Inc.                 *
  ***************************************************************************/
 
 #ifdef HAVE_CONFIG_H
@@ -98,6 +100,7 @@ static struct target_type *target_types[] = {
 	&mem_ap_target,
 	&esirisc_target,
 	&arcv2_target,
+	&rvmax_target,
 	&aarch64_target,
 	&armv8r_target,
 	&mips_mips64_target,
@@ -179,6 +182,7 @@ static const struct jim_nvp nvp_target_event[] = {
 	{ .value = TARGET_EVENT_EXAMINE_START, .name = "examine-start" },
 	{ .value = TARGET_EVENT_EXAMINE_FAIL, .name = "examine-fail" },
 	{ .value = TARGET_EVENT_EXAMINE_END, .name = "examine-end" },
+	{ .value = TARGET_EVENT_EXAMINE_FIRST, .name = "examine-first" },
 
 	{ .value = TARGET_EVENT_DEBUG_HALTED, .name = "debug-halted" },
 	{ .value = TARGET_EVENT_DEBUG_RESUMED, .name = "debug-resumed" },

@@ -15,6 +15,8 @@
  *                                                                         *
  *   Copyright (C) ST-Ericsson SA 2011                                     *
  *   michel.jaouen@stericsson.com : smp minimum support                    *
+ *                                                                         *
+ *   Portions Copyright (C) 2023-2024 Analog Devices, Inc.                 *
  ***************************************************************************/
 
 #ifndef OPENOCD_TARGET_TARGET_H
@@ -274,6 +276,7 @@ enum target_event {
 	TARGET_EVENT_EXAMINE_START,
 	TARGET_EVENT_EXAMINE_FAIL,
 	TARGET_EVENT_EXAMINE_END,
+	TARGET_EVENT_EXAMINE_FIRST, /* first thing called as soon as target examined flag is set */
 
 	TARGET_EVENT_GDB_ATTACH,
 	TARGET_EVENT_GDB_DETACH,
