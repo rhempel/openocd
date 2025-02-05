@@ -1,0 +1,54 @@
+BUILD NOTES FOR OPENOCD UNDER MYS2
+----------------------------------
+
+NOTE: There are some changes that I have not merged yet, mainly because
+      the build I have now works for my purposes. They include:
+
+1. Cortex-M: support for accessing parts in low power mode
+2. USBMUX for heterogenous debug of ADSP-SC598
+3. Some DAP commands that were modified to support multi-core?
+
+MSYS2 SETUP
+-----------
+
+MSYS2 install supports many configurations. Building OpenOCD for
+use with WIndows 10/11 will work best with the URCT environment.
+
+1. Start the MSYS2 UCRT64 (Gold MSYS2 icon)
+
+2. Install the build prerequisites
+   
+   pacman -S unzip bzip2 base-devel mingw-w64-ucrt-x86_64-toolchain mingw-w64-ucrt-x86_64-libusb mingw-w64-ucrt-x86_64-libusb-compat-git mingw-w64-ucrt-x86_64-hidapi mingw-w64-ucrt-x86_64-libftdi
+
+3. There is currently no jimtcl for MSYS2, so we need to build it from
+   the submodule, even though it is listed as deprecated. Configure and
+   build like this:
+
+   cd path/to/openocd/source
+   git submodule update --init
+   ./configure --enable-internal-jimtcl
+   make
+
+MERGE PROCESS
+-------------
+
+The first common ancestor between release-0.12.0-1.1.1 (adi) and main (openocd)
+is: 01a797af1
+
+When merging we take care to follow the latest OpenOCD style and go for
+a minimal change set.
+
+When copying the AD/MAX config, loaders, etc we simply copy the files
+over assuming that they are more current tha anything in OpenOCD.
+
+1. Add the shared_connection field to the ARM data structures
+2. Merge any lines that use these fields
+3. Copy AD/MAX tcl config and contributed flash loaders
+4. Fix any compile/link errors (there were not many)
+
+Once the executable is built, we can test using:
+
+cd path/to/new/openocd/tcl
+../src/openocd.exe -f interface/cmsis-dap.cfg -f target/max32690.cfg
+
+It works!
