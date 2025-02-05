@@ -13,6 +13,8 @@
  *                                                                         *
  *   Copyright (C) 2009 Zachary T Welch                                    *
  *   zw@superlucidity.net                                                  *
+ *                                                                         *
+ *   Portions Copyright (C) 2023 Analog Devices, Inc.                      *
  ***************************************************************************/
 
 #ifdef HAVE_CONFIG_H
@@ -371,6 +373,7 @@ __COMMAND_HANDLER(handle_jtag_configure)
 #define NTAP_OPT_VERSION   6
 #define NTAP_OPT_BYPASS    7
 #define NTAP_OPT_IRBYPASS    8
+#define NTAP_OPT_SHARED_CONNECTION 9
 
 static const struct nvp jtag_newtap_opts[] = {
 	{ .name = "-irlen",          .value = NTAP_OPT_IRLEN },
@@ -382,6 +385,7 @@ static const struct nvp jtag_newtap_opts[] = {
 	{ .name = "-ignore-version", .value = NTAP_OPT_VERSION },
 	{ .name = "-ignore-bypass",  .value = NTAP_OPT_BYPASS },
 	{ .name = "-ir-bypass",      .value = NTAP_OPT_IRBYPASS },
+    { .name = "-shared-connection",     .value = NTAP_OPT_SHARED_CONNECTION },
 	{ .name = NULL,              .value = -1 },
 };
 
@@ -492,6 +496,11 @@ static COMMAND_HELPER(handle_jtag_newtap_args, struct jtag_tap *tap)
 			COMMAND_PARSE_NUMBER(u64, CMD_ARGV[0], tap->ir_bypass_value);
 			CMD_ARGC--;
 			CMD_ARGV++;
+			break;
+
+		case NTAP_OPT_SHARED_CONNECTION:
+			tap->shared_connection = true;
+			LOG_INFO("%s: Shared TAP connection is enabled", tap->tapname);
 			break;
 
 		default:
