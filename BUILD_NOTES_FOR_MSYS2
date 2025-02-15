@@ -26,7 +26,9 @@ use with WIndows 10/11 will work best with the URCT environment.
 
    cd path/to/openocd/source
    git submodule update --init
-   ./configure --enable-internal-jimtcl
+   ./configure --enable-internal-jimtcl \
+        --enable-ice1000 --enable-ice1500 --enable-ice2000 \
+        --enable-adi-dbgagent --enable-usbmux
    make
 
 MERGE PROCESS
