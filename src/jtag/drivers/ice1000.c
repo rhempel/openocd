@@ -2221,7 +2221,7 @@ static int ice1000_swd_queue_idle_cycles(uint32_t len)
 	uint8_t *buffer;
 	int retval;
 
-	buffer = calloc(DIV_ROUND_UP(len, 8), 1);
+	buffer = calloc(1, DIV_ROUND_UP(len, 8));
 	if (!buffer)
 	{
 		LOG_ERROR("calloc(%"PRIu32") fails", DIV_ROUND_UP(len, 8));
@@ -2382,7 +2382,7 @@ static int ice1000_swd_queue_cmd(uint8_t cmd, uint32_t *dst, uint32_t data, uint
 		return retval;
 
 	/* all allocated packets are freed in ice1000_swd_run_queue */
-	packet = calloc(sizeof(struct swd_packet), 1);
+	packet = calloc(1, sizeof(struct swd_packet));
 	if (!packet)
 		return ERROR_FAIL;
 
